@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsEmail, Contains, IsMobilePhone, MinLength, IsString } from "class-validator";
-import { IsDocquityEmail, IsValidPassword } from "src/utils/validators/validators";
+import { IsDocquityEmail, IsValidPassword } from "../../utils/validators/validators";
 
 export class createUsers{
     Id: number;

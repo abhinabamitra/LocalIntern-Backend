@@ -1,6 +1,6 @@
-import { IsNotEmpty, IsEmail, Contains, IsMobilePhone, MinLength, IsString } from "class-validator";
+import { IsNotEmpty, IsEmail, IsMobilePhone } from "class-validator";
 import { Column, Table, Model} from "sequelize-typescript";
-import { IsDocquityEmail, IsValidPassword } from "src/utils/validators/validators";
+import { IsDocquityEmail, IsValidPassword } from "../utils/validators/validators";
 //import { Model } from "sequelize/dist";
 
 @Table({

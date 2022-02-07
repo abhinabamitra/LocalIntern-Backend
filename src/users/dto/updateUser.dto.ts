@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsEmail, Contains, IsMobilePhone, MinLength, IsString, IsOptional } from "class-validator";
-import { IsValidPassword } from "src/utils/validators/validators";
+import { IsValidPassword } from "../../utils/validators/validators";
 
 export class updateUsers {
 

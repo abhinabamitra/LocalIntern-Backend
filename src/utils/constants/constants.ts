@@ -5,7 +5,7 @@ export const EmailPattern: RegExp =
     /^\w+([\.-]?\w+)*@docquity.com/;
 
 export const jwtSecret: string = 'Specialkey';
-export const jwtTimer:string = '2000s';
+export const jwtExpiryTimeout:string = '2000s';
 
 export const sequelizeconf = {
     dialect: 'mysql',
