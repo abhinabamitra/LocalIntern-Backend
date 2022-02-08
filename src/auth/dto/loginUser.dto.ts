@@ -1,5 +1,5 @@
 import { Contains, IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator";
-import { IsDocquityEmail } from "src/utils/validators/validators";
+import { IsDocquityEmail } from "../../utils/validators/validators";
 
 export class loginUser {
 

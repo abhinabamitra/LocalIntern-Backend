@@ -7,7 +7,7 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtWrapperService } from './services/wrappers/jwtWrapper.service';
-import { jwtExpiryTimeout, jwtSecret } from 'src/utils/constants/constants';
+import { jwtExpiryTimeout, jwtSecret } from '../utils/constants/constants';
 
 @Module({
   imports: [UsersModule, PassportModule,

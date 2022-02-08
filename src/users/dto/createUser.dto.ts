@@ -2,7 +2,7 @@ import { IsNotEmpty, IsEmail, Contains, IsMobilePhone, MinLength, IsString } fro
 import { IsDocquityEmail, IsValidPassword } from "../../utils/validators/validators";
 
 export class createUsers{
-    Id: number;
+    //Id: number;
 
     @IsNotEmpty()
     Username: String;

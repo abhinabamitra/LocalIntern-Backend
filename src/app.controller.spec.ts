@@ -5,18 +5,24 @@ import { AppService } from './app.service';
 describe('AppController', () => {
   let appController: AppController;
 
+  const mockUserService = {
+    getHello: jest.fn(()=> {
+      return "Hello World!";
+    })
+  };
+
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
       providers: [AppService],
-    }).compile();
+    }).overrideProvider(AppService).useValue(mockUserService).compile();
 
     appController = app.get<AppController>(AppController);
   });
 
-  // describe('root', () => {
-  //   it('should return "Hello World!"', () => {
-  //     expect(appController.getHello()).toBe('Hello World!');
-  //   });
-  // });
+  describe('root', () => {
+    it('should be defined', () => {
+      expect(appController.getHello()).toBeDefined();
+    });
+  });
 });

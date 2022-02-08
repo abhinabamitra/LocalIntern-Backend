@@ -20,10 +20,10 @@ export class UsersController {
    * @returns This function connects createUser function in users.service
    */
   @Post('createUser')
-  async createUser(@Body() reqBody: createUsers) {
+  createUser(@Body() reqBody: createUsers) {
     console.log("User registered Successfully");
     console.log("Body", reqBody);
-    return await this.usersService.createUser(reqBody);
+    return this.usersService.createUser(reqBody);
   }
 
   @Post('test')
@@ -77,10 +77,10 @@ export class UsersController {
   }
 
   @Patch('users/update/:Email')
-  async updateByUsername(
+  updateByUsername(
     @Param('Email') email: string, @Body() user: updateUsers
   ) {
-    return await this.usersService.updateByUsername(
+    return this.usersService.updateByUsername(
       email, user
     );
   }
