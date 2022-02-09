@@ -7,7 +7,7 @@ describe('UserController', ()=>{
     let service: AuthService;
 
     const loginres = {
-        jwtToken: "eyJ.eyJFbWFpzMjg0MDh9.Y4U_Itx2--naKZmU",
+        jwtToken: "eyJeyJFbWFpzMjg0MDh9",
         user: {
             Id: 8,
             Username: "abhi19",
@@ -20,11 +20,13 @@ describe('UserController', ()=>{
             updatedAt: "2022-01-18T11:22:54.000Z"
         }
     }
+
     const mockAuthService = {
-        validateUser: jest.fn(logindto => {
+        login: jest.fn(logindto => {
             return loginres;
         })
     }
+
     beforeEach(async()=>{
         const module: TestingModule = await Test.createTestingModule({
             controllers: [AuthController],
@@ -44,7 +46,8 @@ describe('UserController', ()=>{
             Email:"abhinaba@docquity.com",
             Password:"Shivam@19"
         }
-        expect(service.validateUser(logindto)).toEqual(
+        
+        expect(controller.login(logindto)).toEqual(
             loginres
         );
     });

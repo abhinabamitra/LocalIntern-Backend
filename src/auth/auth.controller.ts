@@ -12,7 +12,7 @@ export class AuthController {
     @Post('login')
     login(@Body() bodyparam:loginUser){
         console.log(bodyparam)
-        const userdata = this.authService.validateUser(bodyparam);
+        const userdata = this.authService.login(bodyparam);
         return userdata;
     }
 }

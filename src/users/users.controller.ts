@@ -96,7 +96,7 @@ export class UsersController {
         sameSite: true,
         expires: new Date(Number(new Date()) + 60 * 60 * 1000),
         path: '/users',
-        domain: '127.0.0.1'
+        domain: '127.0.0.1', 
       });
     console.log(req.user);
     return req.user;

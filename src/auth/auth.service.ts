@@ -10,7 +10,7 @@ export class AuthService {
     constructor(private usersService: UsersService,
         private jwtService:JwtWrapperService){}
 
-    async validateUser( bodyparam?:loginUser ) {
+    async login( bodyparam?:loginUser ) {
         const user = await this.usersService.findOneByEmail(bodyparam.Email);
         if(!user) {
             throw new HttpException("Invalid Email", HttpStatus.UNAUTHORIZED);

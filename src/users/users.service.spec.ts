@@ -16,7 +16,6 @@ describe('UserService', () => {
     let service: UsersService;
 
     const mockUserModel = {
-        // findOrCreate: jest.fn().mockImplementation((dto) => dto),
         create: jest.fn(() => {
             return Promise.resolve(sDto);
         }),
