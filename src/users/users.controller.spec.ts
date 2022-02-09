@@ -6,6 +6,15 @@ import { UsersService } from "./users.service";
 describe('UserController', ()=>{
     let controller: UsersController;
 
+    const userDto = {
+        Username: 'abhi19',
+        Email: 'abhinaba@docquity.com',
+        Password: 'Shivam@19',
+        Firstname: 'Abhinaba',
+        Lastname: 'Mitra',
+        Mobile: '7550930806',
+    }
+
     const mockUserService = {
         createUser: jest.fn(dto => {
             return {
@@ -19,6 +28,10 @@ describe('UserController', ()=>{
                 Email: email,
                 ...dto
             }
+        }),
+
+        findOneByEmail: jest.fn((email)=> {
+            return userDto
         })
     }
 
@@ -66,5 +79,18 @@ describe('UserController', ()=>{
             Email: 'abhinaba@docquity.com',
             ...dto
         })
+    })
+
+    it('should find one by email', async () => {
+        expect(await controller.findOneByEmail('abhinaba@docquity.com')).toEqual(userDto);
+    })
+
+    it('should throw NOT_FOUND Error when not found user by email', async()=>{
+        try{
+            await controller.findOneByEmail('abhinaba@docquity.com')
+        }
+        catch(e){
+            expect(e.message).toBe("Does Not Exist");
+        }
     })
 });
