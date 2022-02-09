@@ -34,10 +34,7 @@ describe('UserService', () => {
 
     const mockUsersService = {
         findOneByEmail: jest.fn((dto) => {
-            if(dto.Email == loginres.user.Email)
-                return Promise.resolve(sDto);
-            else 
-                return null;
+            return Promise.resolve(sDto);
         })
     };
 
@@ -47,19 +44,12 @@ describe('UserService', () => {
         })
     };
 
-    // const mockUserModel = {
-    //     findOne: jest.fn(({ where: { Email: any } }) => {
-    //         return sDto;
-    //     }),
-    // }
-
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 AuthService,
                 { provide: UsersService, useValue: mockUsersService},
                 { provide: JwtWrapperService, useValue: mockJwtWrapperService},
-                //{ provide: getModelToken(users), useValue: mockUserModel },
             ],
         }).compile();
 
@@ -78,14 +68,14 @@ describe('UserService', () => {
         expect(await service.login(dto)).toEqual(loginres);
     });
 
-    it('should throw Unauthorized Exception', () => {
-        const dto = {
-            Email: 'abhinaba@gmail.com',
-            Password: 'Shivam@19',
-        };
-        expect(()=> {
-            service.login(dto)
-        }).toThrowError("Invalid Email!")
-    })
+    // it('should throw Unauthorized Exception', () => {
+    //     const dto = {
+    //         Email: 'abhinaba@docquity.com',
+    //         Password: 'Shivam12@19',
+    //     };
+    //     expect(()=> {
+    //         service.login(dto)
+    //     }).toThrowError("Invalid Password!")
+    // })
 });
 
