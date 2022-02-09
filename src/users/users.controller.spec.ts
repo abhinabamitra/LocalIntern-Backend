@@ -1,6 +1,8 @@
+import { Req } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
 import { createUsers } from "./dto/createUser.dto";
 import { UsersController } from "./users.controller"
+import { users } from "./users.model";
 import { UsersService } from "./users.service";
 
 describe('UserController', ()=>{
@@ -14,6 +16,8 @@ describe('UserController', ()=>{
         Lastname: 'Mitra',
         Mobile: '7550930806',
     }
+    let reqq:any;
+    let request:any;
 
     const mockUserService = {
         createUser: jest.fn(dto => {
@@ -32,6 +36,10 @@ describe('UserController', ()=>{
 
         findOneByEmail: jest.fn((email)=> {
             return userDto
+        }),
+
+        findAll: jest.fn((req,request) => {
+            return [users];
         })
     }
 
@@ -93,4 +101,15 @@ describe('UserController', ()=>{
             expect(e.message).toBe("Does Not Exist");
         }
     })
+
+    /*it('should find all users', async()=>{
+        // if(req.cookies['auth-cookie']=='true'){
+        //     expect(await controller.findAll(reqq,request)).toEqual([users])
+        // }
+        // else if(req.cookies['auth-cookie']=='false'){
+        //     expect(await controller.findAll(reqq,request)).toEqual([userDto]);
+        // }
+
+        expect(await controller.findAll(reqq,request)).toEqual([users]);
+    })*/
 });

@@ -38,9 +38,11 @@ export class UsersController {
   @UseGuards(AuthGuard('jwt'))
   @Get('users')
   async findAll(@Req() req:any, @Request() request) {
+    const response = await this.usersService.findAll();
     if(req.cookies['auth-cookie'] == 'true')
     {
-      return await this.usersService.findAll();
+      return response;
+      //return await this.usersService.findAll();
     }
     else if(req.cookies['auth-cookie']=='false') {
       return [request.user];
