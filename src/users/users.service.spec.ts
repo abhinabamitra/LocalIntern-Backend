@@ -1,6 +1,7 @@
 import { getModelToken } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
 import { throwError } from 'rxjs';
+import { updateUsers } from './dto/updateUser.dto';
 import { users } from './users.model';
 import { UsersService } from './users.service';
 
@@ -12,6 +13,8 @@ const sDto = {
     Lastname: 'Mitra',
     Mobile: '7550930806',
 };
+let updateDto:updateUsers;
+let dto:{};
 
 describe('UserService', () => {
     let service: UsersService;
@@ -43,14 +46,15 @@ describe('UserService', () => {
         }).compile();
 
         service = module.get<UsersService>(UsersService);
-    });
 
-    it('should be defined', () => {
-        expect(service).toBeDefined();
-    });
+        updateDto = {
+            Firstname: "Abhinaba",
+            Lastname: "Mitra",
+            Password: "Shivam@19",
+            Mobile: "7550930806",
+        }
 
-    it('user created', async function () {
-        const dto = {
+        dto = {
             Username: 'abhi19',
             Email: 'abhinaba@docquity.com',
             Password: 'Shivam@19',
@@ -58,9 +62,14 @@ describe('UserService', () => {
             Lastname: 'Mitra',
             Mobile: '7550930806',
         };
-        expect(await service.createUser(dto)).toEqual(dto);
+    });
 
-        //expect(service.createUser).toHaveBeenCalledWith(dto);
+    it('should be defined', () => {
+        expect(service).toBeDefined();
+    });
+
+    it('user created', async function () {
+        expect(await service.createUser(dto)).toEqual(dto);
     });
 
     it('user is found by Email', async function () {
@@ -72,27 +81,13 @@ describe('UserService', () => {
     })
 
     it('should update user details', async () => {
-
-        const updateDto = {
-            Firstname: "Abhinaba",
-            Lastname: "Mitra",
-            Password: "Shivam@19",
-            Mobile: "7550930806",
-        }
-
-        expect(await service.updateByUsername('abhinaba@docquity.com',updateDto)).toEqual({
+        return expect(await service.updateByUsername('abhinaba@docquity.com', updateDto)).toEqual({
             Id: expect.any(Number),
             ...sDto,
-        })
+        });
     })
 
     it('should show bad request exception when entered user not found', async ()=> {
-        const updateDto = {
-            Firstname: "Abhinaba",
-            Lastname: "Mitra",
-            Password: "Shivam@19",
-            Mobile: "7550930806",
-        }
         // expect(async ()=>{
         //     await service.updateByUsername('abhi1234@docquity.com',updateDto)
         // }).toThrowError("Email not found");
@@ -104,5 +99,4 @@ describe('UserService', () => {
             expect(e.message).toBe("Email not found");
         }
     })
-
 });
