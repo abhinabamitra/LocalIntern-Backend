@@ -39,12 +39,12 @@ export class UsersController {
   @Get('users')
   async findAll(@Req() req:any, @Request() request) {
     const response = await this.usersService.findAll();
-    if(req.cookies['auth-cookie'] == 'true')
+    if(req.cookies['auth_cookie'] == 'true')
     {
       return response;
       //return await this.usersService.findAll();
     }
-    else if(req.cookies['auth-cookie']=='false') {
+    else if(req.cookies['auth_cookie']=='false') {
       return [request.user];
     }
   }
@@ -91,7 +91,7 @@ export class UsersController {
   @UseGuards(AuthGuard('jwt'))
   @Get("profile")
   async getProfile(@Request() req: any, @Res({passthrough:true}) res: Response) {
-    res.cookie('auth-cookie', 'true',
+    res.cookie('auth_cookie', 'true',
       {
         httpOnly: true,
         secure: false,
@@ -102,5 +102,19 @@ export class UsersController {
       });
     console.log(req.user);
     return req.user;
+  }
+
+  @Header('Content-Type', 'application/json')
+  @UseGuards(AuthGuard('jwt'))
+  @Get('logout')
+  async logout(@Req() req:any, @Res({passthrough:true}) response:any){
+    response.cookie('auth_cookie', req.cookie.auth_cookie,{
+      httpOnly:true,
+      secure:false,
+      sameSite:true,
+      path:'/users',
+      domain:'127.0.0.1',
+      expires: new Date(Number(new Date()) - 60 * 60)
+    });
   }
 }

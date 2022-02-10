@@ -97,7 +97,7 @@ describe('UserService', () => {
             await serviceuser.findOneByEmail(dto.Email);
         }
         catch(e){
-            expect(e.message).toBe("InvalidEmail");
+            expect(e.message).toBe("Invalid Email");
         }
     })
 });
