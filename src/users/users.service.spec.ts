@@ -87,7 +87,7 @@ describe('UserService', () => {
         });
     })
 
-    it('should show bad request exception when entered user not found', async ()=> {
+    it('should manifest BAD_REQUEST exception when entered user not found', async ()=> {
         // expect(async ()=>{
         //     await service.updateByUsername('abhi1234@docquity.com',updateDto)
         // }).toThrowError("Email not found");
