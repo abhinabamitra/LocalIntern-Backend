@@ -76,6 +76,7 @@ export class UsersService {
                     'Email':email
                 }
             })
+            console.log(res);
             return res;
         }
         catch (err) {
