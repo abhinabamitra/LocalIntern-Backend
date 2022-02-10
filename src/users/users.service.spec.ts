@@ -76,7 +76,7 @@ describe('UserService', () => {
         expect(await service.findOneByEmail('abhinaba@docquity.com')).toEqual(sDto);
     });
 
-    it('should return all users of type json', async ()=> {
+    it('should return all users', async ()=> {
         expect(await service.findAll()).toEqual([users]);
     })
 

@@ -1,6 +1,6 @@
-import { Req } from "@nestjs/common";
+import { Req} from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
-import { createUsers } from "./dto/createUser.dto";
+import { Request } from "express";
 import { UsersController } from "./users.controller"
 import { users } from "./users.model";
 import { UsersService } from "./users.service";
@@ -17,7 +17,14 @@ describe('UserController', ()=>{
         Mobile: '7550930806',
     }
     let reqq:any;
+    //const mockrequest
     let request:any;
+
+    reqq = {
+        cookies: jest.fn((cookiename)=> {
+            return 'true';
+        })
+    } 
 
     const mockUserService = {
         createUser: jest.fn(dto => {
@@ -52,11 +59,11 @@ describe('UserController', ()=>{
 
         controller = module.get<UsersController>(UsersController);
 
-        Object.defineProperty(window.document,"auth-cookie",{
-            writable:true,
-            value: "true",
-            //get: jest.fn().mockImplementation(() => { return 'true'; }),
-        })
+        // Object.defineProperty(window.document,"auth-cookie",{
+        //     writable:true,
+        //     value: "true",
+        //     //get: jest.fn().mockImplementation(() => { return 'true'; }),
+        // })
     });
 
     it('should be defined', () => {
@@ -109,7 +116,7 @@ describe('UserController', ()=>{
     })
 
     it('should find all users', async()=>{
-        console.log(document['auth-cookie'])
+        //console.log(document['auth-cookie'])
         // if(document['auth-cookie']=='true'){
         //     expect(await controller.findAll(reqq,request)).toEqual([users])
         // }
