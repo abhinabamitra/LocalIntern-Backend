@@ -60,6 +60,12 @@ export class UsersService {
         return await this.usersModel.findAll();
     }
 
+    /**
+     * This function updates by fetching the email from Req and updates user body
+     * @param email Expected email param in the Request
+     * @param user Expected updated user body
+     * @returns This is a http response
+     */
     async updateByUsername (
         email: string,
         user: updateUsers

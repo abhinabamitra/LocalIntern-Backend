@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { JwtWrapperService } from './services/wrappers/jwtWrapper.service';
 import { users } from '../users/users.model';
+import { Controller } from '@nestjs/common';
 
 const sDto = {
     Username: 'abhi19',
@@ -28,9 +29,11 @@ const loginres = {
         //updatedAt: "2022-01-18T11:22:54.000Z"
     }
 }
+let dto:loginUser;
 
 describe('UserService', () => {
     let service: AuthService;
+    let serviceuser: UsersService;
 
     const mockUsersService = {
         findOneByEmail: jest.fn((dto) => {
@@ -54,6 +57,12 @@ describe('UserService', () => {
         }).compile();
 
         service = module.get<AuthService>(AuthService);
+        serviceuser= module.get<UsersService>(UsersService);
+
+        dto = {
+            Email: 'abhinaba@docquity.com',
+            Password: 'Shivam@19',
+        }
     });
 
     it('should be defined', () => {
@@ -61,10 +70,6 @@ describe('UserService', () => {
     });
 
     it('user logged in', async function () {
-        const dto = {
-            Email: 'abhinaba@docquity.com',
-            Password: 'Shivam@19',
-        };
         expect(await service.login(dto)).toEqual(loginres);
     });
 
@@ -77,5 +82,23 @@ describe('UserService', () => {
     //         service.login(dto)
     //     }).toThrowError("Invalid Password!")
     // })
+
+    it('should throw Unauthorized Exception for Invalid Password', async ()=> {
+        try{
+            await service.login(dto);
+        }
+        catch(e){
+            expect(e.message).toBe('Invalid Password');
+        }
+    })
+
+    it('should throw Unauthorized Exception for Invalid Email', async()=> {
+        try{
+            await serviceuser.findOneByEmail(dto.Email);
+        }
+        catch(e){
+            expect(e.message).toBe("InvalidEmail");
+        }
+    })
 });
 

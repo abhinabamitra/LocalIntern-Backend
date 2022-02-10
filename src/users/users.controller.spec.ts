@@ -51,6 +51,12 @@ describe('UserController', ()=>{
         }).overrideProvider(UsersService).useValue(mockUserService).compile();
 
         controller = module.get<UsersController>(UsersController);
+
+        Object.defineProperty(window.document,"auth-cookie",{
+            writable:true,
+            value: "true",
+            //get: jest.fn().mockImplementation(() => { return 'true'; }),
+        })
     });
 
     it('should be defined', () => {
@@ -102,14 +108,15 @@ describe('UserController', ()=>{
         }
     })
 
-    /*it('should find all users', async()=>{
-        // if(req.cookies['auth-cookie']=='true'){
+    it('should find all users', async()=>{
+        console.log(document['auth-cookie'])
+        // if(document['auth-cookie']=='true'){
         //     expect(await controller.findAll(reqq,request)).toEqual([users])
         // }
-        // else if(req.cookies['auth-cookie']=='false'){
+        // if(document['auth-cookie']=='false'){
         //     expect(await controller.findAll(reqq,request)).toEqual([userDto]);
         // }
 
-        expect(await controller.findAll(reqq,request)).toEqual([users]);
-    })*/
+        //expect(await controller.findAll(reqq,request)).toEqual([users]);
+    })
 });
