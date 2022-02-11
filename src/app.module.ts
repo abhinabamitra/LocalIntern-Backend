@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { sequelizeconf } from './utils/constants/constants';
 import { Dialect } from 'sequelize/dist';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [UsersModule, SequelizeModule.forRoot({
@@ -17,7 +18,7 @@ import { Dialect } from 'sequelize/dist';
     password: sequelizeconf['password'],
     database: sequelizeconf['database'],
     models: [users]
-  }), AuthModule],
+  }), AuthModule, ConfigModule.forRoot({ isGlobal: true, })],
   controllers: [AppController],
   providers: [AppService],
 })
