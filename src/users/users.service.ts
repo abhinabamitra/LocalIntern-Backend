@@ -84,7 +84,7 @@ export class UsersService {
         }
     }
 
-    async findOne(email: string) {
-        return this.findOneByEmail(email);
-    }
+    // async findOne(email: string) {
+    //     return this.findOneByEmail(email);
+    // }
 }
