@@ -68,13 +68,17 @@ describe('UserService', () => {
         expect(service).toBeDefined();
     });
 
-    it('user created', async function () {
+    it('should create an user', async function () {
         expect(await service.createUser(dto)).toEqual(dto);
     });
 
-    it('user is found by Email', async function () {
+    it('should find an user by Email', async function () {
         expect(await service.findOneByEmail('abhinaba@docquity.com')).toEqual(sDto);
     });
+
+    it('should find an user by Email', async () => {
+        expect(await service.findOneByUsername('abhi19')).toEqual(sDto);
+    })
 
     it('should return all users', async ()=> {
         expect(await service.findAll()).toEqual([users]);

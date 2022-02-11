@@ -41,6 +41,10 @@ describe('UserController', ()=>{
             return userDto
         }),
 
+        findOneByUsername: jest.fn(()=>{
+            return userDto
+        }),
+
         findAll: jest.fn(() => {
             if(request.cookies.auth_cookie == 'true')
                 return Promise.resolve([users]);
@@ -106,9 +110,22 @@ describe('UserController', ()=>{
         expect(await controller.findOneByEmail('abhinaba@docquity.com')).toEqual(userDto);
     })
 
-    it('should throw NOT_FOUND Error when not found user by email', async()=>{
+    it('should manifest NOT_FOUND Error when not found user by email', async()=>{
         try{
             await controller.findOneByEmail('abhinaba@docquity.com')
+        }
+        catch(e){
+            expect(e.message).toBe("Does Not Exist");
+        }
+    })
+
+    it('should find one by Username', async()=> {
+        expect(await controller.findOneByUsername('abhi19')).toEqual(userDto);
+    })
+
+    it('should manifest NOT_FOUND Error when not found user by Username', async() => {
+        try{
+            await controller.findOneByUsername('abhi19');
         }
         catch(e){
             expect(e.message).toBe("Does Not Exist");
