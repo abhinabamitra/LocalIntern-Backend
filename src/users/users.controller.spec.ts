@@ -16,15 +16,11 @@ describe('UserController', ()=>{
         Lastname: 'Mitra',
         Mobile: '7550930806',
     }
-    let reqq:any;
-    //const mockrequest
-    let request:any;
 
-    reqq = {
-        cookies: jest.fn((cookiename)=> {
-            return 'true';
-        })
-    } 
+    let sDto :users
+    const request = {user:userDto, cookies:{auth_cookie:'true'}};
+    const falserequest = {user:userDto,cookies:{auth_cookie:'false'}};
+    const req = {user:userDto};
 
     const mockUserService = {
         createUser: jest.fn(dto => {
@@ -45,9 +41,12 @@ describe('UserController', ()=>{
             return userDto
         }),
 
-        findAll: jest.fn((req,request) => {
-            return [users];
-        })
+        findAll: jest.fn(() => {
+            if(request.cookies.auth_cookie == 'true')
+                return Promise.resolve([users]);
+            else if(falserequest.cookies.auth_cookie == 'false')
+                return Promise.resolve([userDto]);
+        }),
     }
 
 
@@ -59,11 +58,12 @@ describe('UserController', ()=>{
 
         controller = module.get<UsersController>(UsersController);
 
-        // Object.defineProperty(window.document,"auth-cookie",{
+        // Object.defineProperty(window.document,"cookie",{
         //     writable:true,
-        //     value: "true",
+        //     value: "auth_cookie=true",
         //     //get: jest.fn().mockImplementation(() => { return 'true'; }),
         // })
+
     });
 
     it('should be defined', () => {
@@ -115,7 +115,7 @@ describe('UserController', ()=>{
         }
     })
 
-    it('should find all users', async()=>{
+    it('should find all users if cookie value true', async()=>{
         //console.log(document['auth-cookie'])
         // if(document['auth-cookie']=='true'){
         //     expect(await controller.findAll(reqq,request)).toEqual([users])
@@ -123,7 +123,13 @@ describe('UserController', ()=>{
         // if(document['auth-cookie']=='false'){
         //     expect(await controller.findAll(reqq,request)).toEqual([userDto]);
         // }
-
         //expect(await controller.findAll(reqq,request)).toEqual([users]);
+        const val = await controller.findAll(request, req);
+        expect(val).toEqual([users]);
+    })
+
+    it('should find single user if cookie value false', async() => {
+        const val = await controller.findAll(falserequest,req);
+        expect(val).toEqual([userDto]);
     })
 });
