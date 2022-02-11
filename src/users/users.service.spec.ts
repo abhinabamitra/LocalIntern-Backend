@@ -76,7 +76,7 @@ describe('UserService', () => {
         expect(await service.findOneByEmail('abhinaba@docquity.com')).toEqual(sDto);
     });
 
-    it('should find an user by Email', async () => {
+    it('should find an user by Username', async () => {
         expect(await service.findOneByUsername('abhi19')).toEqual(sDto);
     })
 
