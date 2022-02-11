@@ -39,6 +39,7 @@ export class UsersController {
   @Get('users')
   async findAll(@Req() req:any, @Request() request) {
     const response = await this.usersService.findAll();
+    console.log(req.cookies.auth_cookie);
     if(req.cookies['auth_cookie'] == 'true')
     {
       return response;
