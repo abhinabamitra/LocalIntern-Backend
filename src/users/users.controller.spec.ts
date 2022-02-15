@@ -1,6 +1,6 @@
 import { Req} from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
-import { Request } from "express";
+import { Request, Response } from "express";
 import { UsersController } from "./users.controller"
 import { users } from "./users.model";
 import { UsersService } from "./users.service";
@@ -148,5 +148,29 @@ describe('UserController', ()=>{
     it('should find single user if cookie value false', async() => {
         const val = await controller.findAll(falserequest,req);
         expect(val).toEqual([userDto]);
+    })
+
+    it('should create return the user after creating cookie', async ()=> {
+        const mockreq = {
+            user:{
+                Email: 'abhinaba@docquity.com',
+                Firstname: 'Abhinaba',
+                Lastname: 'Mitra',
+                Username: 'abhi19'
+            }
+        }//, cookies:{auth_cookie:'true'}};
+        //const mockresponse = {user:userDto, cookies:{auth_cookie:'true'}} as unknown as Response;
+
+        const mockresponse = {
+            cookie:jest.fn()
+        } as unknown as Response
+
+        const result = await controller.getProfile(mockreq,mockresponse)
+
+        expect(result).toHaveProperty("Email");
+        expect(result).toHaveProperty("Firstname");
+        expect(result).toHaveProperty("Lastname");
+        expect(result).toHaveProperty("Username");
+        expect(result).not.toHaveProperty("Password");
     })
 });

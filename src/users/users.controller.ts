@@ -21,15 +21,15 @@ export class UsersController {
    */
   @Post('createUser')
   createUser(@Body() reqBody: createUsers) {
-    console.log("User registered Successfully");
-    console.log("Body", reqBody);
+    //console.log("User registered Successfully");
+    //console.log("Body", reqBody);
     return this.usersService.createUser(reqBody);
   }
 
-  @Post('test')
-  async testee(@Body() data) {
-    await console.log(data);
-  }
+  // @Post('test')
+  // async testee(@Body() data) {
+  //   await console.log(data);
+  // }
 
   /**
    * This function returns all Users
@@ -101,21 +101,23 @@ export class UsersController {
         path: '/users',
         domain: '127.0.0.1', 
       });
+    console.log('123');
+    
     console.log(req.user);
     return req.user;
   }
 
-  @Header('Content-Type', 'application/json')
-  @UseGuards(AuthGuard('jwt'))
-  @Get('logout')
-  async logout(@Req() req:any, @Res({passthrough:true}) response:any){
-    response.cookie('auth_cookie', req.cookie.auth_cookie,{
-      httpOnly:true,
-      secure:false,
-      sameSite:true,
-      path:'/users',
-      domain:'127.0.0.1',
-      expires: new Date(Number(new Date()) - 60 * 60)
-    });
-  }
+  // @Header('Content-Type', 'application/json')
+  // @UseGuards(AuthGuard('jwt'))
+  // @Get('logout')
+  // async logout(@Req() req:any, @Res({passthrough:true}) response:any){
+  //   response.cookie('auth_cookie', req.cookie.auth_cookie,{
+  //     httpOnly:true,
+  //     secure:false,
+  //     sameSite:true,
+  //     path:'/users',
+  //     domain:'127.0.0.1',
+  //     expires: new Date(Number(new Date()) - 60 * 60)
+  //   });
+  // }
 }

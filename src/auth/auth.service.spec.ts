@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { JwtWrapperService } from './services/wrappers/jwtWrapper.service';
 import { users } from '../users/users.model';
-import { Controller } from '@nestjs/common';
+import { Controller, UnauthorizedException } from '@nestjs/common';
 
 const sDto = {
     Username: 'abhi19',
@@ -31,7 +31,7 @@ const loginres = {
 }
 let dto:loginUser;
 
-describe('UserService', () => {
+describe('AuthService', () => {
     let service: AuthService;
     let serviceuser: UsersService;
 
@@ -83,6 +83,24 @@ describe('UserService', () => {
     //     }).toThrowError("Invalid Password!")
     // })
 
+    it('should throw "Invalid Password" for Invalid Password', async ()=> {
+        try{
+            expect(await service.login(dto)).toEqual(loginres);
+        }
+        catch(e){
+            expect(e.message).toBe('Invalid Password');
+        }
+
+        // const spyonlogin = jest.spyOn(
+        //     service['AuthService'],
+        //     'login'
+        // ).mockReturnValue(Promise.resolve(sDto));
+
+        // await expect(await service.login(dto)).rejects.toThrowError("Invalid Password")
+        // await expect(await service.login(dto)).rejects.toThrowError(UnauthorizedException);
+        // expect(spyonlogin).toBeCalled();
+    })
+
     it('should throw Unauthorized Exception for Invalid Password', async ()=> {
         try{
             await service.login(dto);
@@ -92,12 +110,21 @@ describe('UserService', () => {
         }
     })
 
-    it('should throw Unauthorized Exception for Invalid Email', async()=> {
+    it('should throw "Invalid Email" Error for Invalid Email', async()=> {
         try{
             await serviceuser.findOneByEmail(dto.Email);
         }
         catch(e){
             expect(e.message).toBe("Invalid Email");
+        }
+    })
+
+    it('should throw Unauthorized Exception Error for Invalid Email', async()=> {
+        try{
+            await serviceuser.findOneByEmail(dto.Email);
+        }
+        catch(e){
+            expect(e).toBe(UnauthorizedException);
         }
     })
 });

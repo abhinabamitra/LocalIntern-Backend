@@ -20,13 +20,19 @@ export class UsersService {
      * @returns This is http response
      */
     async createUser(body) {
-        return await this.usersModel.create(body)
-        .catch(err => {
-            console.log("Error");
+        //const res = await this.usersModel.create(body);
+        //console.log(res);
+        //return await this.usersModel.create(body)
+        try{
+            const res = await this.usersModel.create(body);
+            console.log(res);
+            return res;
+        }
+        catch(err){
             throw new HttpException (
                 "Email already exists", HttpStatus.BAD_REQUEST
             )
-        })
+        }
     }
 
     /**
@@ -70,16 +76,17 @@ export class UsersService {
         email: string,
         user: updateUsers
     ) {
-        try{
-            var res =  await this.usersModel.update (user, {
-                where:{
-                    'Email':email
-                }
-            })
-            console.log(res);
+        var res =  await this.usersModel.update (user, {
+            where:{
+                'Email':email
+            }
+        })
+        console.log(res[1]);
+        if(res[0]==1){
             return res;
         }
-        catch (err) {
+        else{
+            //return res;
             throw new HttpException("Email not found", HttpStatus.BAD_REQUEST)
         }
     }
